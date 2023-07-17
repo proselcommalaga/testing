@@ -1,0 +1,45 @@
+---
+swagger: "2.0"
+info:
+  description: "Description"
+  version: "1.0.0"
+  title: "ApiName"
+host: "localhost:5555"
+basePath: "/basepath/basepath"
+schemes:
+- "http"
+- "https"
+produces:
+- "application/json"
+paths:
+  /apis/{productId}:
+    get:
+      description: "Description"
+      operationId: "getProductApis"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Product identifier"
+        required: true
+        type: "number"
+      responses:
+        "200":
+          description: "true if the operation was successfull"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ApiObjRef"
+
+definitions:
+  ApiObjRef:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        description: "API identifier"
+      apiName:
+        type: "string"
+        description: "API name"
+      description:
+        type: "string"
+        description: "API name"

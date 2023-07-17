@@ -1,0 +1,63 @@
+# service definition
+service:
+  uuaa: JLIB
+  # Nombre comercial del servicio
+  publicName:  java-lib
+  # Nombre corto de servicio
+  name: java-lib
+  # Descripción del servicio
+  description: >
+    library java
+  version: "1.0.0"
+  # Tipo de servicio
+  type: LIBRARY
+  # Language
+  language: Java
+  # Versión del language
+  languageVersion: "1.8.121"
+  # Versión mínima de NOVA
+  novaVersion: "18.04"
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  - name: "service.log"
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRING"
+    # default value
+    default: "silly"
+    # who is the property owner
+    # SERVICE: any team member can modify this property
+    # ENVIRONMENT: Only environment owner can modify this property
+    # - INT, PRE, PRO: Project support - Product = dev
+      # - INT, PRE: Project support - Product = Maintenance
+      # - PRO: Service support - Product = Maintenance
+    management: "SERVICE"
+    # encrypt property so it's only visible by the owner
+    encrypt: false
+
+# Optional
+# Requirements - list of requirementes of a library
+requirements:
+  - name: PRECONF
+    description: 'Uses preconf'
+    type: INSTALLATION
+    value: 'Y'
+  - name: FILE_SYSTEM
+    description: 'Needs file system'
+    type: RESOURCE
+    value: 'N'
+  - name: CPU
+    description: 'CPU needed'
+    type: RESOURCE
+    value: '0.5'
+  - name: MEMORY
+    description: 'Memory needed to use the library'
+    type: RESOURCE
+    value: '1024'
+  - name: USES_C
+    description: 'Needs C'
+    type: INSTALLATION
+    value: 'N'
+

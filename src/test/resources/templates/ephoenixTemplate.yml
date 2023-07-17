@@ -1,0 +1,177 @@
+#
+# SAMPLE TEMPLATE TO DEFINE JNDI PROPERTIES FOR A EPHOENIX SERVICE
+#
+nova_props_metadata:
+
+#Propiedades ENVIRONMENT PS y SS, SERVICE equipo y administradores#
+
+### JDBC ### Oracle, Postgres o SQL Server
+
+ # CONFIGURACIÓN BASE DE DATOS:
+  - name: "service.jdbc.url.name"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.jdbc.url.value"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "/jdbc:_________"
+  - name: "service.jdbc.url.path"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/jdbc"
+
+  # USUARIO DE BASE DE DATOS:
+  - name: "service.jdbc.user.name"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "ephoenix.db.user.value"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "ephoenix.db.user.path"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jdbc" #Comun para user y password
+
+ # PASSWORD DE BASE DE DATOS:
+  - name: "service.jdbc.password.name"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.jdbc.password.value"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "service.jdbc.password.path"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jdbc"
+
+### JMS ### Tibco o MQ
+
+ # CONFIGURACIÓN BASE DE DATOS:
+  - name: "service.jms.brokerurl.name"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.jms.brokerurl.value"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "/tcp://_________"
+  - name: "service.jms.brokerurl.path"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/jms"
+
+  # USUARIO DE BASE DE DATOS:
+  - name: "service.jms.user.name"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "ephoenix.db.user.value"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "ephoenix.db.user.path"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jms"
+
+ # PASSWORD DE BASE DE DATOS:
+  - name: "service.jms.password.name"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.jms.password.value"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "service.jms.password.path"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jms"
+
+### JMS-QUEUE ### Cola o Tópico
+
+ # CONFIGURACIÓN COLAS:
+  - name: "service.queue.physicalname.name"
+    description: "Nombre de la Cola"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.queue.physicalname.value"
+    description: "Nombre de la Cola"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "BCH.BBVA.CIB______" # O GLB.BCH.CIB si es de Elara antigua
+  - name: "service.queue.physicalname.path"
+    description: "Nombre de la Cola"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/jms"
+
+  # USUARIO DE BASE DE DATOS:
+  - name: "service.queue.user.name"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "ephoenix.db.user.value"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "ephoenix.db.user.path"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jms"
+
+ # PASSWORD DE BASE DE DATOS:
+  - name: "service.queue.password.name"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "com.bbva.${UUAA}.properties"
+  - name: "service.queue.password.value"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "service.queue.password.path"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+    default: "/usr/local/${ENTORNO}/ePhoenix/instances/${INSTANCE}/cfg/entorno/jndi/uuaa/cfg/jndi/${UUAA}/entorno/jndi/jms"

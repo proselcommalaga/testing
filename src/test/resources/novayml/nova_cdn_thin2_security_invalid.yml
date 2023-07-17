@@ -1,0 +1,93 @@
+# service definition
+service:
+  uuaa:
+  # Nombre comercial del servicio
+  publicName: Nuevo CDN Thin2
+  # Nombre corto de servicio
+  name: cdnthin2_¨^
+  # Descripción del servicio
+  description: >
+    testeando chiki
+  version: "1.0.0"
+  # Tipo de servicio
+  type: CDN
+  # Language
+  language: Angular - Thin2
+  # Versión del language
+  languageVersion: last
+  # Versión mínima de NOVA
+  novaVersion: "15.04.05"
+
+# swagger api definitions
+apis:
+  # list of APIs that this service expose
+  serve:
+    # swagger definition file
+    # swagger can't be empty
+    - definition:
+
+    # APIs that are used in this implementation
+      clients:
+        - src/main/resources/api-client.yml
+
+  # APIs that are used not directly by any API endpoint
+  # clients:
+  #   - src/main/resources/apic1.yml
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  # Empty//Null property name
+  - name:
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRINGO"
+    # default value
+    default: "silly"
+    # who is the property owner
+    # SERVICE: any team member can modify this property
+    # ENVIRONMENT: Only environment owner can modify this property
+    # - INT, PRE, PRO: Project support - Product = dev
+      # - INT, PRE: Project support - Product = Maintenance
+      # - PRO: Service support - Product = Maintenance
+    #[SERVICE], [LIBRARY] or [ENVIRONMENT]
+    management: "SERVICIO"
+    # encrypt property so it's only visible by the owner
+    # [true] - [false]
+    encrypt: falso
+
+# Optional
+# dependencies, build order
+# list of project names you depend on
+# those must be in the same subsystem
+dependencies:
+  - service-name-001
+  - service-name-002
+
+# Optional
+# List of extra ports your application need to expose to the outside world
+ports:
+  # port your application will run
+  - insidePort:
+    # port name/identifier, used for connector
+    name:
+    description: descripcion
+    # type: TCP,UDP
+    type: TCPU
+    # Optional
+    # NOVA will give you one by default
+    # port in the host machine you need to expose your application
+    outsidePort: 37495
+
+# Optional
+# Extra build steps you application need
+# Example: binary dependencies
+build:
+  - kerberos: true
+
+# Optional
+# list of machines your application must be deployed
+machines:
+ - INT: ["nova_machine_601"]
+ - PRE: ["nova_machine_602"]
+ - PRO: ["nova_machine_603"]

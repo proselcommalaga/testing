@@ -1,0 +1,49 @@
+# service definition
+service:
+  uuaa: ENVM
+  # Nombre comercial del servicio
+  publicName: API en java spring
+  # Nombre corto de servicio
+  name: javaapi
+  # Descripción del servicio
+  description: >
+    Api mu chola en JAVA
+  version: "1.0.0"
+  # Tipo de servicio
+  type: API REST
+  # Language
+  language: Java - Spring boot
+  # Versión del language
+  languageVersion: "1.8.121"
+  # Versión mínima de NOVA
+  novaVersion: "18.04"
+
+# swagger api definitions
+apis:
+  # list of APIs that this service expose
+  served:
+    # swagger definition file
+    - definition: src/main/resources/api1.yml
+
+      # APIs that are used in this implementation
+      consumed:
+        - src/main/resources/api-client1.yml
+        - src/main/resources/api-client2.yml
+
+    - definition: src/main/resources/api2.yml
+      consumed:
+        - src/main/resources/api-client3.yml
+        - src/main/resources/api-client4.yml
+
+
+  # APIs that are used not directly by any API endpoint
+  # consumed:
+  #   - src/main/resources/apic1.yml
+
+asyncapis:
+  backToBack:
+    - src/main/resources/backToBackApi1.yml
+    - src/main/resources/backToBackApi2.yml
+  backToFront:
+    - src/main/resources/backToFrontApi1.yml
+    - src/main/resources/backToFrontApi2.yml

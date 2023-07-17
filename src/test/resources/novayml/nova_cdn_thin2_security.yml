@@ -1,0 +1,31 @@
+# service definition
+service:
+  uuaa: ENVM
+  # Nombre comercial del servicio
+  publicName: Nuevo CDN Thin2
+  # Nombre corto de servicio
+  name: cdnthin2
+  # Descripción del servicio
+  description: >
+    testeando chiki
+  version: 1.0.0
+  # Tipo de servicio
+  type: CDN
+  # Language
+  language: Angular - Thin2
+  # Versión del language
+  languageVersion: latest
+  # Versión mínima de NOVA
+  novaVersion: "18.04"
+
+# swagger api definitions
+apis:
+  # Thin2 never serve anything, just consume
+  clients:
+    - src/app/apis/api-client.yml
+
+# thin2 does not have config-server access
+# thin2 does not have dependencies
+# thin2 does not have ports
+# thin2 does not need anything to build
+# thin2 is deployed in the CDN not in a machine

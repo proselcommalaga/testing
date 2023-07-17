@@ -1,0 +1,20 @@
+asyncapi: '2.0.0'
+info:
+  title: test1Channel1
+  version: '1.0.0'
+  description: |
+    The First channel of the first Test with mode direct = publish
+  x-business-unit: abcd
+
+defaultContentType: application/json
+
+channels:
+  mychannel1:
+    description: The channel 1
+    publish:
+      summary: Summary of the messages.
+      operationId: myChannel1Operation
+      message:
+        $ref: '#/components/messages/message1'
+      x-scs-group: myNovaGroup1
+

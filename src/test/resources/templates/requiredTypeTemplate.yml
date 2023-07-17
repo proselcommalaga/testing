@@ -1,0 +1,32 @@
+
+#
+# This template is used to check the exception created in a wrong file.
+# The definition of the last property requires a Type definition.
+#
+
+nova_props_metadata:
+  - name: "service.log"
+    description: "Nivel de log"
+    type: "STRING"
+    default: "DEBUG"
+  - name: "service.language"
+    description: "Idioma por defecto del servicio"
+    type: "STRING"
+    default: "ESP"
+    management: "SERVICE"
+  - name: "service.password"
+    description: "Clave de seguridad"
+    encrypt: true
+    type: "STRING"
+    global: false
+    management: "ENVIRONMENT"
+  - name: "library.log"
+    description: "Nivel de log de la libería"
+    encrypt: false
+    type: "STRING"
+    management: "LIBRARY"
+    default: "INFO"
+  - name: "library.configuration"
+    description: "Fichero de configuracion xml"
+    encrypt: false
+    management: "LIBRARY"

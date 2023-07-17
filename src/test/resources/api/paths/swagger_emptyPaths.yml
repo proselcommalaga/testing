@@ -1,0 +1,45 @@
+swagger: '2.0'
+info:
+  title: ApiName
+  description: Description
+  version: 1.0.0
+  contact:
+    name: "product"
+    url: "http://url/#/products/product/1"
+    email: "swagger@bbva.com"
+
+host: localhost:5555
+
+basePath: "/basepath"
+
+schemes:
+  - http
+  - https
+consumes:
+
+produces:
+  - application/json
+#############################################################################
+#                                   Paths                                   #
+#############################################################################
+paths:
+
+
+################################################################################
+#                                 Definitions                                  #
+################################################################################
+definitions:
+  ApiObjRef:
+    type: object
+    properties:
+      id:
+        type: number
+        description: API identifier
+      apiName:
+        type: string
+        description: API name
+      description:
+        type: string
+        description: API name
+x-generator-properties:
+  business-unit: "test"

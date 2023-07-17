@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bbva.test</groupId>
+    <artifactId>service03</artifactId>
+    <version>1.0.0</version>
+    <name>ephoenixService</name>
+    <description>Valid ePhoenix batch service</description>
+
+    <properties>
+        <uuaa.name>test</uuaa.name>
+        <nova.type>ephoenix_batch</nova.type>
+        <nova.version>3</nova.version>
+
+        <!-- ePhoenix Properties -->
+        <ephoenix.version>1.5</ephoenix.version>
+        <ephoenix.instance.name>MDS_BATCH</ephoenix.instance.name>
+        <!--<ephoenix.deployment>GMO</ephoenix.deployment>-->
+        <ephoenix.instance.uuaas>KLTT, KLMM, KYTG</ephoenix.instance.uuaas>
+        <ephoenix.instance.user>xe00000</ephoenix.instance.user>
+    </properties>
+
+    <modules>
+        <module>Modulo1</module>
+    </modules>
+
+    <build>
+        <!-- Mandatory tag. ***** Jar final name of the service in NOVA ******
+           Auto generated - Do not Edit or remove it! This sentence generates the final
+           name of the jar of your service in NOVA -->
+        <finalName>${project.groupId}-${project.artifactId}</finalName>
+
+    </build>
+
+
+
+</project>

@@ -1,0 +1,78 @@
+#
+# SAMPLE TEMPLATE TO DEFINE JNDI PROPERTIES FOR A EPHOENIX SERVICE
+#
+nova_props_metadata:
+
+
+### JDBC ###
+
+ # CONFIGURACIÓN BASE DE DATOS:
+  - name: "service.jdbc.url.name"
+    description: "Url de conexión a base de datos"
+    type: "STRING"
+    management: "SERVICE"
+    default: "/defaultName"
+  - name: "service.jdbc.url.value"
+    description: "Url de conexión a base de datos. Valor"
+    type: "STRING"
+    management: "SERVICE"
+  - name: "service.jdbc.url.path"
+    description: "Url de conexión a base de datos. Path"
+    type: "STRING"
+    management: "SERVICE"
+    default: "/defaultPath"
+
+  # USUARIO DE BASE DE DATOS:
+  - name: "service.jdbc.user.name"
+    description: "Usuario de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+  - name: "ephoenix.db.user.value"
+    description: "Usuario de conexión a la BBDD. Valor"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: true
+  - name: "ephoenix.db.user.path"
+    description: "Usuario de conexión a la BBDD. Path"
+    type: "STRING"
+    management: "ENVIRONMENT"
+
+ # PASSWORD DE BASE DE DATOS:
+  - name: "service.jdbc.password.name"
+    description: "Password de conexión a la BBDD"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    encrypt: false
+  - name: "service.jdbc.password.value"
+    description: "Password de conexión a la BBDD. Valor"
+    type: "STRING"
+    encrypt: true
+    management: "ENVIRONMENT"
+  - name: "service.jdbc.password.path"
+    description: "Password de conexión a la BBDD. Path"
+    type: "STRING"
+    encrypt: false
+    management: "ENVIRONMENT"
+
+  # DATABASE TYPE:
+  - name: "service.jdbc.databaseType.name"
+    description: "Tipo de base de datos"
+    type: "STRING"
+    management: "SERVICE"
+  - name: "service.jdbc.databaseType.value"
+    description: "Tipo de base de datos. Valor"
+    type: "STRING"
+    management: "SERVICE"
+    default: "javax.sql.DataSource"
+  - name: "service.jdbc.databaseType.path"
+    description: "Tipo de base de datos. Path"
+    type: "STRING"
+    management: "SERVICE"
+
+
+ # LINEA DE DESPLIEGUE  (NO DEBE IR AQUÍ ->  SERÁ IGNORADA) :
+  - name: "ephoenix.deployment.line"
+    description: "Línea de despliegue ERRONEA"
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "error tests"

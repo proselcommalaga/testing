@@ -1,0 +1,26 @@
+
+service:
+  log: DEBUG
+  language: ESP  
+  password:
+
+library:
+  log: INFO
+
+nova_props_metadata:
+  - name: "service.log"
+    description: "Nivel de log"
+    type: "TEXT"
+  - name: "service.language"
+    description: "Idioma por defecto del servicio"
+    type: "TEXT"
+  - name: "service.password"
+    description: "Clave de seguridad"
+    encrypt: true
+    type: "STRING"
+    global: false
+  - name: "library.log"
+    description: "Nivel de log de la libería"
+    encrypt: false
+    type: "TEXT"
+    global: true

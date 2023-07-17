@@ -1,0 +1,88 @@
+novaScheduler:
+  init:
+    trigger:
+      - type: cron
+        description: Cron expression for trigger # Optional
+        relatedContextParams:
+          - ctx.trigger
+    conditionsStep: # Optional
+      - condition: Condition1
+        to: Step1
+    defaultStep: EndSuccess # Default step to go (Required)
+
+  novaStep:
+    - name: Step1
+      novaJob:
+        - name: Step1 batch service schedule
+          type: batch
+          serviceName: batchservice
+      defaultStep: EndError
+    - name: Step2
+      novaJob:
+        - name: Step2 batch service schedule
+          type: batch
+          serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 3 
+      novaJob:
+        - name: Step3 batch service schedule
+          type: batch
+          serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 4
+      novaJob:
+         - name: Step4 batch service schedule
+           type: batch
+           serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 5
+      novaJob:
+          - name: Step5 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 6
+      novaJob:
+          - name: Step6 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 7
+      novaJob:
+          - name: Step7 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 8
+      novaJob:
+          - name: Step8 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 9
+      novaJob:
+          - name: Step9 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 10
+      novaJob:
+          - name: Step10 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+    - name: Step 11
+      novaJob:
+          - name: Step11 batch service schedule
+            type: batch
+            serviceName: batchservice
+      defaultStep: EndError
+
+  conditions:
+    - name: Condition1
+      type: expression
+      value: "timeoutBatch > 500"
+
+  ends:
+    - name: EndSuccess  # Required
+    - name: EndError    # Required

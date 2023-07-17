@@ -1,0 +1,48 @@
+# service definition
+service:
+  uuaa: KXWB
+  # Comercial name
+  publicName: oportunidadesprivilegiadas
+  # Short name, cannot contain fancy chars
+  name: oportunidadesprivilegiadas
+  # Service description
+  description: >
+    Aplicación de servicios para Oportunidades Privilegiadas GDT - Salesforce
+  # Service version
+  version: "1.0.11"
+  # Service type: do not touch
+  type: Frontcat
+  # Language: do not touch
+  language: Java - Spring MVC
+  # language version: do not touch
+  languageVersion: "1.8.121"
+  # NOVA Release
+  novaVersion: "19.04"
+  # NOVA CLI Release
+  novaCliVersion: "6.0.2"
+
+
+# Mandatory for frontcat service:
+frontcat:
+  junction: KXWB
+  contextPath: kxwb_mult_web_servicios_01
+  networkHostEnabled: true
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  - name: "service.log"
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRING"
+    # default value
+    default: "silly"
+      # who is the property owner
+      # SERVICE: any team member can modify this property
+    # ENVIRONMENT: Only environment owner can modify this property
+    # - INT, PRE, PRO: Project support - Product = dev
+    # - INT, PRE: Project support - Product = Maintenance
+    # - PRO: Service support - Product = Maintenance
+    management: "SERVICE"
+    # encrypt property so it's only visible by the owner
+    encrypt: false

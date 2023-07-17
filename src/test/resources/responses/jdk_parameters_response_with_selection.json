@@ -1,0 +1,88 @@
+{
+  "typedParameters": [
+    {
+      "name": "Garbage Collection",
+      "description": "Garbage collection related parameters.",
+      "exclude": true,
+      "parameters": [
+        {
+          "isDefault": true,
+          "name": "-XX:+UseSerialGC",
+          "isSelected": false,
+          "description": "Serial garbage collector (-XX:+UseSerialGC)",
+          "jdkVersionParameterId": 10
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:+UseParallelGC",
+          "isSelected": true,
+          "description": "Parallel garbage collector",
+          "jdkVersionParameterId": 11
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:+UseParNewGC",
+          "isSelected": false,
+          "description": "ParNew garbage collector",
+          "jdkVersionParameterId": 12
+        }
+      ]
+    },
+    {
+      "name": "Logs GC",
+      "description": "Garbage collection logging related parameters.",
+      "exclude": true,
+      "parameters": [
+        {
+          "isDefault": true,
+          "name": "-XX:NumberOfGCLogFiles=10",
+          "isSelected": false,
+          "description": "Assigned 10 GC log files.",
+          "jdkVersionParameterId": 13
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:NumberOfGCLogFiles=20",
+          "isSelected": true,
+          "description": "Assigned 20 GC log files.",
+          "jdkVersionParameterId": 14
+        }
+      ]
+    },
+    {
+      "name": "Strings performance",
+      "description": "Multiple performance enhancements by String optimization.",
+      "exclude": false,
+      "parameters": [
+        {
+          "isDefault": false,
+          "name": "-XX:+OptimizeStringConcat",
+          "isSelected": false,
+          "description": "Optimizes String concatenation when possible.",
+          "jdkVersionParameterId": 18
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:+UseCompressedStrings",
+          "isSelected": true,
+          "description": "Uses byte[] for Strings representable in pure ASCII.",
+          "jdkVersionParameterId": 17
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:+UseStringCache",
+          "isSelected": false,
+          "description": "Enables caching of commonly allocated strings available in the String pool.",
+          "jdkVersionParameterId": 16
+        },
+        {
+          "isDefault": false,
+          "name": "-XX:+UseStringDeduplication",
+          "isSelected": false,
+          "description": "Removes duplicated strings in heap.",
+          "jdkVersionParameterId": 15
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+# Application yml by default for all NOVA services
+# All the info and details about each section, you can find it into NOVA Krypton Technical documentation (located in NOVA DRIVE):
+# url: https://drive.google.com/open?id=1swuBgrm-BGLmdXBmZowsgsLPfWv3SspYXHOFWVNYkjM
+
+# Customize the info endpoint
+info:
+  build:
+    groupId: @project.groupId@
+    artifact: @project.artifactId@
+    version: @project.version@
+    name: @project.name@
+    description: @project.description@
+
+# Enable spring doc to expose all the endpoints of the swaggers of the services via open api v.3 and swagger ui
+springdoc:
+  api-docs:
+    path: /openapi
+    resolve-schema-properties: true
+  model-and-view-allowed: true
+  swagger-ui:
+    path: /swagger-ui
+    showExtensions: true
+    deepLinking: true
+    displayOperationId: true
+
+# Configure endpoints (From actuator dependency). By default, all actuator are enabled except shutdown.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: shutdown
+  # Activate all details and all possible information for health endpoint and set ttl in seconds. By default is 10 seconds
+  endpoint:
+    env:
+      post:
+        enabled: ${MANAGEMENT_ENDPOINT_ENV_POST_ENABLED:true}
+    health:
+      show-details: ALWAYS
+      cache.time-to.live: 10s
+  # Disable hystrix metrics for avoiding conflicts with old hystrix configuration from nova4 release
+  metrics:
+    binders:
+      hystrix:
+        enabled: false
+
+# Server Port
+server:
+  port: ${SERVER_PORT:36070}
+
+# Logging level and NOVA services pattern, that includes the trace, span and iv-user traces
+logging:
+  path: ${LOG_PATH:.}
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+  pattern:
+    level: "%5p [${spring.zipkin.service.name:${spring.application.name:-}},%X{iv-user:-},%X{traceId:-},%X{spanId:-},%X{spanExportable:-}]"
+
+# Set the JMX host and port. By default it is enabled. In NOVA, the JMX port should be one more than the server port of the service.
+# For example: if the service server port is: 37830, hazelcast port must be: 37831
+jmx:
+  rmi:
+    enabled: ${JMX_ENABLED:false}
+    host: ${JMX_HOST:localhost}
+    port: ${JMX_PORT:36071}
+
+# Ribbon and hystrix timeout properties in milliseconds
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 110000
+hystrix.threadpool.default.coreSize: 20
+ribbon:
+  ConnectTimeout: ${RIBBON_CONNECT_TIMEOUT:110000}
+  ReadTimeout: ${RIBBON_READ_TIMEOUT:110000}
+  MaxAutoRetries: 0 # the number of times a failed request is retried on the same server (default 0)
+  MaxAutoRetriesNextServer: 2 # the number of servers to try excluding the first one (default 0)
+  retryableStatusCodes: 500, 404, 503 # the list of HTTP status codes to retry
+  OkToRetryOnAllOperations: true # when this property is set to true, all types of HTTP requests are retried, not just GET ones (default)
+
+# Spring general configuration.
+spring:
+  # Spring 2 Data Source and JPA configurations. If the service do not use data base, removed this properties.
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: NEVER
+    hikari:
+      connection-init-sql: SELECT 'coreservice'
+      connectionTimeout: 60000 # 1 min. How much time a user can wait to get a connection from the pool. if it exceeds the time limit then an SQlException is thrown
+      minimumIdle: 5 # minimum pool size
+      maximum-pool-size: 35 # maximum pool size
+      max-lifetime: 40000 # maximum lifetime in milliseconds (1 min)
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+
+  # Spring JMX and Cloud configuration. By default, Ribbon and JMX will be enabled
+  jmx:
+    enabled: ${JMX_ENABLED:false}
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: ${RIBBON_ENABLED:true}
+
+  # Spring Sleuth configuration.
+  sleuth:
+    # Property from logsUtils dependency to enable handle the generic log trace
+    enabled: ${SLEUTH_ENABLED:true}
+    baggage:
+      correlation-fields:
+        - iv-user
+      local-fields:
+        - iv-user
+      remote-fields:
+        - iv-user
+    # Disabled async configuration to avoid duplicate strategy with NOVA propagation header (NOVA Context)
+    async:
+      configurer:
+        enabled: false
+    sampler:
+      probability: ${SLEUTH_SAMPLER_PROBABILITY:1.0}
+
+  # Spring Zipkin configuration. By default, sleuth is disable. For enabling, you must set logsUtils dependency.
+  zipkin:
+    baseUrl: ${ZIPKIN_SERVER_URL:http://localhost:36290}
+    enabled: ${ZIPKIN_ENABLED:true}
+
+# NOVA configurations
+nova:
+  syncutils:
+    # Shedlock configuration
+    shedlock:
+      enabled: true
+      lock-at-most: "25h"
+  # Time in days for storing deployment plans and release versions(storages) into NOVA BBDD
+  storageDays:
+    deploymentPlanInt: 30
+    deploymentPlanPre: 30
+    deploymentPlanPro: 60
+    deploymentBatchInstance: 35
+    releaseVersionStorage: 60
+    deploymentPlanChange: 90
+    undeployedPlanStorage: 90
+    serviceExecutionHistory: 90
+  # Cron expressions
+  scheduledTasksCron:
+    deploymentPlanCron: 0 0 2 * * ?
+    releaseVersionCron: 0 0 3 * * ?
+    batchInstanceCron: 0 0 4 * * ?
+    deploymentPlanChangeCron: 0 0 5 * * ?
+    undeployedPlanCron: 0 0 6 * * ?
+    cleanServiceExecutionHistoryCron: 0 30 5 * * ?
+  # Fixed delay scheduled tasks
+  scheduledTask:
+    healthBrokerAlert:
+      initialDelay: 40000
+      fixedDelay: 60000
+    nodeBrokerAlert:
+      initialDelay: 45000
+      fixedDelay: 60000
+    overflowedBrokerAlert:
+      initialDelay: 50000
+      fixedDelay: 60000
+    queueLengthBrokerAlert:
+      initialDelay: 55000
+      fixedDelay: 60000
+    publishRateBrokerAlert:
+      initialDelay: 60000
+      fixedDelay: 60000
+    consumerRateBrokerAlert:
+      initialDelay: 65000
+      fixedDelay: 60000
+  # Set the classes (full name, including packaging) as a list to expose in the error code via actuator/errorcodes
+  errorcodes:
+    enabled: ${NOVA_ENDPOINT_ERROR_CODES_ENABLED:true}
+
+  # Properties of the APIs
+  version: 3
+  packaging: "jar"
+  parentVersion: "1.1"
+  minimumNovaVersion: "18"
+  minimumJavaVersion: "1.8"
+  minimumFrontCatJavaVersion: "1.7"
+  minimumNodeJsVersion: "8"
+  minimumAngularVersion: "0"
+  minimumPythonVersion: "3.7"
+  minimumTemplateVersion: "1.0"
+  pluginOutputDirectory: "./dist"
+  pluginVersion: 4
+  validations:
+    uuaaMaxLength: 4
+    maxServicesInSubsystem: 20
+  quality:
+    minRiskLevel: 0
+    maxRiskLevel: 5
+    maxRiskLevelThreshold: 3
+  # Supported Node.js major versions in a comma separated list.
+  node:
+    versions: 6, 7, 8
+  test:
+    connection:
+      timeout: 5000
+  # CORS for local testing. By default is false
+  cors:
+    enabled: ${NOVA_CORS_ENABLED:false}
+    methods: ${NOVA_CORS_METHODS:OPTIONS, GET, POST}
+
+  # NOVA aspects. Property from logsUtils dependency to enable handle the generic exception.
+  aspect:
+    log:
+      trace:
+        enabled: ${NOVA_LOG_ASPECT_ENABLED:true}
+        # Set the max size characters of the json for log info trace.
+        info:
+          max:
+            size: ${NOVA_LOG_INFO_MAX_SIZE:1000}
+
+  # NOVA Cache configurations. By default it is disable. For enabling, you must set novabootstarter dependency and all default values will be loaded
+  cache:
+    enabled: ${NOVA_CACHE_ENABLED:false}
+    cacheDefaults:
+      max-size: ${NOVA_CACHE_MAX_SIZE:500}
+      eviction-policy: ${NOVA_CACHE_EVICTION_POLICY:LRU}
+      ttl-seconds: ${NOVA_CACHE_TTL_SECONDS:-1}
+    #
+    # Define your owns caches for the services as a list, following this example:
+    #caches:
+    #  -
+    #    name: players-cache
+    #  -
+    #    name: player-details-cache
+    #    eviction-policy: LFU
+    #    ttl-seconds: 120
+
+    # Hazelcast cluster config. In NOVA, the Hazelcast port should be 2 more than the server port of the service.
+    # For example: if the service server port is: 37830, hazelcast port must be: 37832
+    hazelcast:
+      port: ${NOVA_CACHE_HAZELCAST_PORT:8082}
+
+      # Set this property in the application-yml environment depending file.
+      #other-cluster-members:
+      #  - localhost:9003
+
+  # URL to GCSP portal pointing to a given pass.
+  gcspUrl: https://cibreports.es.igrupobbva/GCSP/egsp_es_web/?idPase={idPase}
+  minimumMultiJdkJavaVersion: 11
+
+  # Flag to decide if it's necessary to validate that the required documents exist before deploying specific resources.
+  validate-documents-before-deploying-logical-connectors: false
+  validate-documents-before-deploying-nova-apis: false
+  validate-documents-before-deploying-control-m-batches: false
+
+  brokers:
+    # max number of brokers allowed for a product in an environment
+    maxBrokersByEnvironmentLimit: 1
+
+  # Google groups for message in todotask to give permissions to documents
+  drive:
+    groups: novaadmin.group@bbva.com, novaauthorizations.group@bbva.com, novasqa.group@bbva.com, novasolutions.group@bbva.com, novagobierno.group@bbva.com, novaprofiling.group@bbva.com, novaxmas.group@bbva.com, novasep.group@bbva.com
+
+
+# Feign client services names
+feign:
+  name:
+    # <Service name>: <ID on Eureka on uppercase>
+    # Service name comes from application.yml on the generated client example.
+    # ID comes from each service bootstrap.yml.
+    Continuousintegrationapi: COM.BBVA.ENOA.PLATFORMIO-CONTINUOUSINTEGRATION-NOVA9-9
+    Versioncontrolsystemapi: COM.BBVA.ENOA.PLATFORMIO-VERSIONCONTROLSYSTEM-NOVA9-9
+    Mailserviceapi: COM.BBVA.ENOA.PLATFORMIO-MAILSERVICE-NOVA9-9
+    Profilingapi: COM.BBVA.ENOA.PLATFORMSERVICES-PROFILINGSERVICE-NOVA9-9
+    Deploymentmanagerapi: COM.BBVA.ENOA.PLATFORMIO-DEPLOYMENTMANAGER-NOVA9-9
+    Qualityassuranceapi: COM.BBVA.ENOA.PLATFORMIO-QUALITYASSURANCE-NOVA9-9
+    Configurationmanagerapi: COM.BBVA.ENOA.PLATFORMSERVICES-CONFIGURATIONMANAGER-NOVA9-9
+    Filesystemmanagerapi: COM.BBVA.ENOA.STORAGE-FILESYSTEMMANAGER-NOVA9-9
+    Dockerregistryapi: COM.BBVA.ENOA.PLATFORMIO-DEPLOYMENTMANAGER-NOVA9-9
+    Productbudgetsapi: COM.BBVA.ENOA.PRODUCTSERVICES-BUDGETSSERVICE-NOVA9-9
+    Issuetrackerapi: COM.BBVA.ENOA.PLATFORMIO-ISSUETRACKER-NOVA9-9
+    Documentsmanagerapi: COM.BBVA.ENOA.PLATFORMIO-DOCUMENTSMANAGER-NOVA9-9
+    Productsapi: COM.BBVA.ENOA.PLATFORMSERVICES-CORESERVICE-NOVA9-9
+    Apigatewaymanagerapi: COM.BBVA.ENOA.SECURITY-APIGATEWAYMANAGER-NOVA9-9
+    Ethermanagerapi: COM.BBVA.ENOA.PLATFORMIO-ETHERMANAGER-NOVA9-9
+    Toolsapi: COM.BBVA.ENOA.PLATFORMIO-TOOLSERVICE-NOVA9-9
+    Librarymanagerapi: COM.BBVA.ENOA.PLATFORMIO-LIBRARYMANAGER-NOVA9-9
+    Schedulermanagerapi: COM.BBVA.ENOA.BATCH-SCHEDULERMANAGER-NOVA9-9
+    Statisticsuserapi: COM.BBVA.ENOA.PLATFORMSERVICES-USERSERVICE-NOVA9-9
+    Usersadminapi: COM.BBVA.ENOA.PLATFORMSERVICES-USERSERVICE-NOVA9-9
+    Schedulecontrolmapi: COM.BBVA.ENOA.BATCH-BATCHMANAGER-NOVA9-9
+    Batchmanagerapi: COM.BBVA.ENOA.BATCH-BATCHMANAGER-NOVA9-9
+    Alertserviceapi: COM.BBVA.ENOA.MONITORING-PLATFORMHEALTHMONITOR-NOVA9-9
+    Filetransferstatisticsapi: COM.BBVA.ENOA.BATCH-FILETRANSFERMANAGER-NOVA9-9
+    Logsapi: COM.BBVA.ENOA.MONITORING-LOGSMANAGER-NOVA9-9
+    Filesystemsapi: COM.BBVA.ENOA.PLATFORMSERVICES-CORESERVICE-NOVA9-9
+    Filetransferadmin: COM.BBVA.ENOA.BATCH-FILETRANSFERMANAGER-NOVA9-9
+    Brokerdeploymentapi: COM.BBVA.ENOA.PLATFORMIO-DEPLOYMENTMANAGER-NOVA9-9
+    Behaviormanagerapi: COM.BBVA.ENOA.PLATFORMIO-DEPLOYMENTMANAGER-NOVA9-9

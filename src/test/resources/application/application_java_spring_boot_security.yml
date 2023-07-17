@@ -1,0 +1,58 @@
+# --------#### NOVA Service Configuration File #### --------
+# This file is for writing all the configuration of the service.
+# Type file: Application file configuration YAML.
+# You can write your own properties configuration, environment variables or all what you need configurate as settings.
+# For understand how you should fill this file, review the following Spring Boot documentation:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html
+# Section 69.4: Use YAML for external properties
+
+# UUAA Name: Mandatory parameter
+# Name assigned for your product in capital letters.
+uuaa: envm
+
+# NOVA Maven Endpoints of the service. Recommended parameter. Optional.
+# Setting this configuration allow your service exposes an end point that showing
+# the maven cordinates information. You can reach this end point in your service as following:
+# http://host:port/info
+info:
+  build:
+    groupId: @project.groupId@
+    artifact: @project.artifactId@
+    version: @project.version@
+    name: @project.name@
+    description: @project.description@
+
+# Endpoints of your service. Recommended parameter. Non mandatory - Optional
+# Remove or uncomment if you do not want to enable this endpoints.
+# This configuration enables this endpoints in your service that allows you to manage the service
+# (restart, refresh, shutdown or know the health of the service) via end point. For example:
+# GET http://host:port/health - To know full info of the health of the service -
+# POST http://host:port/restart - To restart the service.
+# POST http://host:port/shutdown - To shutdown the the service
+# POST http://host:port/refresh - To refresh (for example configuration) of the service
+endpoints:
+  health:
+    sensitive: false
+    time-to-live: 1000
+  restart:
+    enabled: false
+  shutdown:
+    enabled: false
+  refresh:
+    enabled: true
+  logfile:
+    enabled: false
+
+# Loggin configuration
+logging:
+  path: ${LOG_PATH:.}
+  level:
+    ROOT: INFO
+
+# Server port
+server:
+  port: ${NOVA_PORT:8080}
+
+# Environment service
+environment:
+  service: "LOCAL"

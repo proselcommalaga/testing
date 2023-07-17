@@ -1,0 +1,104 @@
+# NOVA environment dependant configuration.
+nova:
+  storageDays:
+    serviceExecutionHistory: 30
+  scheduledTasksCron:
+    cleanServiceExecutionHistoryCron: 0 30 5 * * ?
+  alert:
+    email: "enoa_lab.cib@bbva.com"
+    user: "IMM0589"
+  products:
+    cpd:
+      cdpInt: TC_INT
+      cdpPre: TC_PRE
+      cdpPro: TC_PRO
+  gatewayServices:
+    user: ${NOVA_SERVICE_USER:nova}
+    pass: ${NOVA_SERVICE_USER_KEY:nova2018}
+    cesProfilingEnabled: true
+    cesRolesEnabled: true
+    cesUuaa: "KKPF"
+    cesServiceName: "com.bbva.kkpf-cesmanagement-ces-1"
+  issuetracker:
+    enabled: true
+  url: http://10.48.230.205:35420/novadashboard/
+  cloudGatewayUrl:
+    int: http://10.48.228.217
+    pre: http://10.48.227.24
+    pro: http://10.48.231.201
+  mappings:
+    baseUrl:
+      int: http://10.48.230.184:35420
+      pre: http://10.48.230.200:35420
+      pro: http://10.48.230.205:35420
+      zuul: http://10.48.230.205:35420
+    monitoring:
+      products:
+        INT: '/novamonitoring/d/GJ-uzRSiz/product-dashboard-int?var-interval=5m&var-uuaa={uuaa}'
+        PRE: '/novamonitoring/d/kWULzgImz/product-dashboard-pre?var-interval=5m&var-uuaa={uuaa}'
+        PRO: '/novamonitoring/d/xSu-M8Vmz/product-dashboard-pro?var-interval=5m&var-uuaa={uuaa}'
+      containers:
+        INT: '/novamonitoring/d/n2CpigIik/container-dashboard-int?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+        PRE: '/novamonitoring/d/izSNmRSmk/container-dashboard-pre?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+        PRO: '/novamonitoring/d/_Iy50X4iz/container-dashboard-pro?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+      hosts:
+        int: '/novamonitoring/d/HrmS73Vik/host-dashboard-int?refresh=30s&orgId=1'
+        pre: '/novamonitoring/d/boPk7q4mz/host-dashboard-pre?refresh=30s&orgId=1'
+        pro: '/novamonitoring/d/hKCNjVViz/host-dashboard-pro?refresh=30s&orgId=1'
+    management:
+      portainer: '/novamanagement'
+      registry:
+        pre: 'http://10.48.228.224:36370/'
+        pro: 'http://10.48.228.224:36370/'
+  tools:
+    jira: http://ldjir601.igrupobbva:20002/JIRA/
+    sonar: http://10.48.230.113:80/
+    atenea:
+      INT: 'https://atenea.work-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+      PRE: 'https://atenea.work-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+      PRO: 'https://atenea.work-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+  budgets:
+    useInDeployment: true
+  filesystems:
+    maxPerEnvAndType: 3
+  maxTags: 3
+  maxDeployments: 20
+  deploymentScript:
+    machine: 'SG-PRO-ENOA-CORE-SERVICE'
+    user: 'xpnova1p'
+    laucher: /usr/local/lab/nova/deploymentlauncher/nova_deployment_launcher.sh
+    starter: /usr/local/lab/nova/deploymentlauncher/nova_deployment_starter.sh
+  user:
+    code: IMM0589
+    name: APP JIRA
+    surname1: APLICACION
+    surname2: JIRA
+    mail: enoa.cib@bbva.com
+    roles: Platform_Admin_ENOA
+  connectors:
+    monitoring:
+      port: 35699
+      url: '/haproxy?stats'
+  keys:
+    brokerUserPassword: ${BROKER_USER_PASSWORD_ENCRYPTION_KEY}
+  novaAgentList:
+    - environment: INT
+      hostPort:
+        - 10.0.18.63:36470
+    - environment: PRE
+      hostPort:
+        - 10.0.19.60:36470
+    - environment: PRO
+      hostPort:
+        - 10.0.20.69:36470
+# CORE service data source configuration
+spring:
+  datasource:
+    #url: jdbc:postgresql://10.48.230.93:443/coreservice?targetServerType=master
+    url: ${DATASOURCE_URL:jdbc:postgresql://10.48.230.93:35002,10.48.229.175:35002,10.48.231.229:35002/coreservice?targetServerType=master}
+    username: ${DATASOURCE_USER:postgres}
+    password: ${DATASOURCE_PASS:torres2017}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false

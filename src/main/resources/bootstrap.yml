@@ -1,0 +1,23 @@
+# Service name of the service: groupID-artifactID-RELEASE_NAME-MayorVersion for NOVA 9
+spring:
+  application:
+    name: ${SERVICE_GROUP_ID:com.bbva.enoa.platformservices}-${SERVICE_ARTIFACT_ID:coreservice}-${RELEASE_NAME:nova9}-${SERVICE_MAJOR_VERSION:9}
+  # Service Profile
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:LOCAL}
+
+# Eureka server configuration.
+eureka:
+  instance:
+    hostname: ${HOSTNAME:localhost}
+    leaseRenewalIntervalInSeconds: 5
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+      zone: ${EUREKA_CLIENT_ZONE:TC}
+  client:
+    registerWithEureka: ${REGISTER_EUREKA_ENABLED:true}
+    fetchRegistry: ${EUREKA_FETCH_REGISTRY_ENABLED:true}
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
+
+

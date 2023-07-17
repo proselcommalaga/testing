@@ -1,0 +1,38 @@
+asyncapi: '2.0.0'
+info:
+  title: Test1Channel3
+  version: '1.0.0'
+  description: |
+    The Third channel of the first Test with mode direct = subscribe
+  x-business-unit: abcd
+
+defaultContentType: application/json
+
+channels:
+  mychannel3:
+    description: The channel 3
+    subscribe:
+      summary: Summary of the messages.
+      operationId: myChannel3Operation
+      message:
+        name: nameMessage3_4
+        title: titleMessage3_4
+        summary: Inform about message 3_4.
+        payload:
+          $ref: "#/components/schemas/message3_4Payload"
+      x-scs-group: myNovaGroup
+
+components:
+  schemas:
+    message3_4Payload:
+      type: object
+      properties:
+        genericData3_4:
+          type: string
+          description: Any more data.
+        sentAt:
+          $ref: "#/components/schemas/sentAt"
+    sentAt:
+      type: string
+      format: date-time
+      description: Date and time when the message was sent.

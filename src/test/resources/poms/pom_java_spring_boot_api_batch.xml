@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bbva.envm</groupId>
+    <artifactId>mybatch</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>mybatch</name>
+    <description>Un Batch en spring boot</description>
+
+    <parent>
+        <groupId>com.bbva.enoa.core</groupId>
+        <artifactId>base</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.bbva.enoa.core</groupId>
+            <artifactId>novabatchtask</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!--
+          Mandatory! -  Do not Edit or remove it!
+          Needed to register batch execution into NOVA (nova_batch_admin)
+        -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--
+          Mandatory! -  Do not Edit or remove it!
+          This sentence generates the final name of the jar of your service in NOVA
+        -->
+        <finalName>${project.groupId}-${project.artifactId}</finalName>
+        <plugins>
+            <!--
+              Mandatory! -  Do not Edit or remove it!
+              This generates the Fat JAR.
+              It takes care of Jersey issues when scanning embedded jars
+            -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>./dist</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

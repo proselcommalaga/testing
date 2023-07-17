@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bbva.test</groupId>
+    <artifactId>service02</artifactId>
+    <version>1.0.0</version>
+    <name>service02</name>
+    <description>Valid Thin2 service</description>
+
+    <parent>
+        <groupId>com.bbva.test</groupId>
+        <artifactId>base</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <properties>
+        <uuaa.name>test</uuaa.name>
+        <nova.type>thin2</nova.type>
+        <nova.version>3</nova.version>
+        <thin2.version>2</thin2.version>
+    </properties>
+
+    <build>
+        <finalName>com.bbva.enoa.test-service02</finalName>
+    </build>
+
+</project>

@@ -1,0 +1,57 @@
+asyncapi: '2.0.0'
+info:
+  title: Test1Channel2
+  version: '1.0.0'
+  contact:
+    url: http://url/#/products/product/1
+  description: |
+    The Second channel of the first Test with mode direct = publish
+  x-business-unit: abcd
+
+defaultContentType: application/json
+
+
+servers:
+  production:
+    url: localhost
+    protocol: amqp
+    description: This is "My Company" broker.
+    security:
+      - user-password: []
+
+channels:
+  mychannel2:
+    description: The channel 2
+    publish:
+      summary: Summary of the messages.
+      operationId: myChannel2Operation
+      message:
+        $ref: '#/components/messages/message2'
+      x-scs-group: myNovaGroup2
+
+components:
+  messages:
+    message2:
+      name: nameMessage2
+      title: titleMessage2
+      summary: Inform about message 2.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/message2Payload"
+  schemas:
+    message2Payload:
+      type: object
+      properties:
+        genericData:
+          type: string
+          description: Any data.
+        sentAt:
+          $ref: "#/components/schemas/sentAt"
+    sentAt:
+      type: string
+      format: date-time
+      description: Date and time when the message was sent.
+  securitySchemes:
+    user-password:
+      type: userPassword
+

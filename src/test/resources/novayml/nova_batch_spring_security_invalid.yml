@@ -1,0 +1,115 @@
+# service definition
+service:
+  uuaa:
+  # Nombre comercial del servicio
+  publicName: Batch en spring boot
+  # Nombre corto de servicio
+  name: batchspring++
+  # Descripción del servicio
+  description: >
+    Un Batch en spring boot
+  version: "1_0.0"
+  # Tipo de servicio
+  type: Batch
+  # Language
+  language: Java - Spring Batch
+  # Versión del language
+  languageVersion: "1.7.121"
+  # Versión mínima de NOVA
+  novaVersion: "8.04"
+
+# swagger api definitions
+apis:
+  # Batch never serve any api
+
+  # APIs that Batch uses.
+  # clients:
+  #   - src/main/java/resources/apis/api-client.yml
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  - name:
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRINGI"
+    # default value
+    default: "silly"
+    # who is the property owner
+    # SERVICE: any team member can modify this property
+    # ENVIRONMENT: Only environment owner can modify this property
+    # - INT, PRE, PRO: Project support - Product = dev
+      # - INT, PRE: Project support - Product = Maintenance
+      # - PRO: Service support - Product = Maintenance
+    management: "SURVICE"
+    # encrypt property so it's only visible by the owner
+    encrypt: fals
+
+  # mandatory properties to configure nova batch database
+  - name:
+    description: "Url de la base de datos de batches"
+    encrypt: fals
+    type: "STRlNG"
+    management: "ENVIROMENT"
+    default: "jdbc:postgresql://linov626.igrupobbva:35630/batch_admin"
+  - name: "nova.batch.datasource^^+username"
+    description: "Username de la base de datos de batch"
+    encrypt: true
+    type: "STRING"
+    default: "nova"
+    management: "ENVIRONMENT"
+  - name: "nova.batch.datasource.password"
+    description: "Password de la base de datos de batch"
+    encrypt: true
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: ""
+  - name: "nova.batch.datasource.driverClassName"
+    description: "Driver de la base de datos de batch"
+    encrypt: false
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "org.postgresql.Driver"
+  - name: "nova.batch.datasource.initialize"
+    description: "Inicializa la base de datos"
+    encrypt: false
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "false"
+  - name: "nova.batch.datasource.testOnBorrow"
+    description: "Test la base de datos"
+    encrypt: false
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "true"
+  - name: "nova.batch.datasource.validationQuery"
+    description: "Valida la base de datos"
+    encrypt: false
+    type: "STRING"
+    management: "ENVIRONMENT"
+    default: "SELECT 1"
+
+
+
+# Optional
+# dependencies, build order
+# list of project names you depend on
+# those must be in the same subsystem
+# dependencies:
+#  - service-name-001
+#  - service-name-002
+
+# batch does not have ports
+
+# Optional
+# Extra build steps you application need
+# Example: binary dependencies
+# build:
+#   kerberos: true
+
+# Optional
+# list of machines your application must be deployed
+# machines:
+# - INT: ["nova_machine_601"]
+# - PRE: ["nova_machine_602"]
+# - PRO: ["nova_machine_603"]

@@ -1,0 +1,116 @@
+# Logging.
+logging:
+  level:
+    com.bbva.enoa.platformservices.coreservice: INFO
+    ROOT: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+
+# NOVA environment dependant configuration.
+nova:
+  alert:
+    email: "enoa.cib@bbva.com"
+    user: "IMM0589"
+  products:
+    cpd:
+      cdpInt: TC_INT
+      cdpPre: TC_PRE
+      cdpPro: TC_PRO
+  gatewayServices:
+    user: ${NOVA_SERVICE_USER:nova}
+    pass: ${NOVA_SERVICE_USER_KEY:nova2018}
+    cesProfilingEnabled: true
+    cesRolesEnabled: true
+    cesUuaa: "KKPF"
+    cesServiceName: "com.bbva.kkpf-cesmanagement-ces-1"
+  issuetracker:
+    enabled: true
+  url: https://cibdesktop.es.igrupobbva/ENOA/novadashboard/
+  cloudGatewayUrl:
+    int: https://ei-wbamdesktop.es.igrupobbva
+    pre: https://au-wbamdesktop.es.igrupobbva
+    pro: https://cibdesktop.es.igrupobbva
+  mappings:
+    baseUrl:
+      int: https://ei-wbamdesktop.es.igrupobbva/ENOA/
+      pre: https://au-wbamdesktop.es.igrupobbva/ENOA/
+      pro: https://cibdesktop.es.igrupobbva/ENOA/
+      zuul: http://tcnovatcp.igrupobbva:35623
+    monitoring:
+      products:
+        INT: 'novamonitoring/d/GJ-uzRSiz/product-dashboard-int?var-interval=5m&var-uuaa={uuaa}'
+        PRE: 'novamonitoring/d/kWULzgImz/product-dashboard-pre?var-interval=5m&var-uuaa={uuaa}'
+        PRO: 'novamonitoring/d/xSu-M8Vmz/product-dashboard-pro?var-interval=5m&var-uuaa={uuaa}'
+      containers:
+        INT: 'novamonitoring/d/n2CpigIik/container-dashboard-int?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+        PRE: 'novamonitoring/d/izSNmRSmk/container-dashboard-pre?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+        PRO: 'novamonitoring/d/_Iy50X4iz/container-dashboard-pro?var-interval=5m&var-uuaa={uuaa}&var-container={container}'
+      hosts:
+        int: 'novamonitoring/d/HrmS73Vik/host-dashboard-int?refresh=30s&orgId=1'
+        pre: 'novamonitoring/d/boPk7q4mz/host-dashboard-pre?refresh=30s&orgId=1'
+        pro: 'novamonitoring/d/hKCNjVViz/host-dashboard-pro?refresh=30s&orgId=1'
+    management:
+      springBootAdmin:
+        int: 'https://ei-wbamdesktop.es.igrupobbva/ENOA/novaadminconsole2/login'
+        pre: 'https://au-wbamdesktop.es.igrupobbva/ENOA/novaadminconsole2/login#/'
+        pro: 'https://cibdesktop.es.igrupobbva/ENOA/novaadminconsole2/login'
+      portainer: 'http://lpnov521.igrupobbva:35420/novamanagement'
+      registry:
+        pre: 'http://lwnov625.igrupobbva:36370/,http://lwnov635.igrupobbva:36370/'
+        pro: 'http://lpnov523.igrupobbva:36370/,http://lpnov533.igrupobbva:36370/,http://lpnov633.igrupobbva:36370/'
+  tools:
+    jira: https://cibproducts.grupobbva.com/JIRA/
+    sonar: http://lwnov602.igrupobbva:35120/
+    atenea:
+      INT: 'https://atenea.work-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+      PRE: 'https://atenea.work-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+      PRO: 'https://atenea.live-01.nextgen.igrupobbva/atenea/?dURL={0}&dNS={1}{2}'
+  budgets:
+    useInDeployment: true
+  filesystems:
+    maxPerEnvAndType: 3
+  maxTags: 3
+  maxDeployments: 20
+  deploymentScript:
+    machine: 'tcnovabatch.igrupobbva'
+    user: 'xpnova1p'
+    laucher: /usr/local/pr/nova/deploymentlauncher/nova_deployment_launcher.sh
+    starter: /usr/local/pr/nova/deploymentlauncher/nova_deployment_starter.sh
+  user:
+    code: IMM0589
+    name: APP JIRA
+    surname1: APLICACION
+    surname2: JIRA
+    mail: enoa.cib@bbva.com
+    roles: Platform_Admin_ENOA
+  connectors:
+    monitoring:
+      port: 35699
+      url: '/haproxy?stats'
+  keys:
+    brokerUserPassword: ${BROKER_USER_PASSWORD_ENCRYPTION_KEY}
+  novaAgentList:
+    - environment: INT
+      hostPort:
+        - linov626:36470
+        - linov636:36470
+    - environment: PRE
+      hostPort:
+        - lwnov626:36470
+        - lwnov636:36470
+    - environment: PRO
+      hostPort:
+        - lpnov526:36470
+        - lpnov536:36470
+        - lpnov635:36470
+        - lpnov626:36470
+# data source configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://lpnov526:35002,lpnov536:35002,lpnov626:35002,lpnov635:35002/coreservice?targetServerType=master
+    username: ${NOVADB_USER}
+    password: ${NOVA_KEY}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false

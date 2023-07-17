@@ -1,0 +1,21 @@
+asyncapi: '2.0.0'
+info:
+  title: test1Channel1
+  version: '1.0.0'
+  description: |
+    The First channel of the first Test with mode direct = publish
+  x-business-unit: abcd
+
+components: INVALID:BAD_FORMAT
+  schemas:
+    message1PayloadDto:
+      type: object
+      properties:
+        measure:
+          type: integer
+          minimum: 0
+          description: Measure of anything.
+        sentAt:
+          $ref: "#/components/schemas/sentAtDto"
+        data:
+          $ref: "#/components/schemas/dataTypeDto"

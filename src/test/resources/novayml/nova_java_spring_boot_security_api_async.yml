@@ -1,0 +1,84 @@
+# service definition
+service:
+  uuaa: ENVM
+  # Nombre comercial del servicio
+  publicName: API en java spring
+  # Nombre corto de servicio
+  name: javaapi
+  # Descripción del servicio
+  description: >
+    Api mu chola en JAVA
+  version: "1.0.0"
+  # Tipo de servicio
+  type: API
+  # Language
+  language: Java - Spring boot
+  # Versión del language
+  languageVersion: "1.8.121"
+  # Versión mínima de NOVA
+  novaVersion: "18.04"
+
+# swagger api definitions
+apis:
+  # APIs that are used not directly by any API endpoint
+  # consumed:
+  #   - src/main/resources/apic1.yml
+
+asyncapis:
+  backToFront:
+    - src/main/resources/backToFrontApi1.yml
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  - name: "service.log"
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRING"
+    # default value
+    default: "silly"
+      # who is the property owner
+      # SERVICE: any team member can modify this property
+      # ENVIRONMENT: Only environment owner can modify this property
+      # - INT, PRE, PRO: Project support - Product = dev
+    # - INT, PRE: Project support - Product = Maintenance
+    # - PRO: Service support - Product = Maintenance
+    management: "SERVICE"
+    # encrypt property so it's only visible by the owner
+    encrypt: false
+
+# Optional
+# dependencies, build order
+# list of project names you depend on
+# those must be in the same subsystem
+dependencies:
+  - service-name-001
+  - service-name-002
+
+# Optional
+# List of extra ports your application need to expose to the outside world
+ports:
+  # port your application will run
+  - insidePort: 8080
+    # port name/identifier, used for connector
+    name: Fix
+    description: descripcion
+    # type: TCP,UDP
+    type: TCP
+    # Optional
+    # NOVA will give you one by default
+    # port in the host machine you need to expose your application
+    outsidePort: 37495
+
+# Optional
+# Extra build steps you application need
+# Example: binary dependencies
+build:
+  - kerberos: true
+
+# Optional
+# list of machines your application must be deployed
+machines:
+  - INT: ["nova_machine_601"]
+  - PRE: ["nova_machine_602"]
+  - PRO: ["nova_machine_603"]

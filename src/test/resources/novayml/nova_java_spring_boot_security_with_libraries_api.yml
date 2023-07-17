@@ -1,0 +1,88 @@
+# service definition
+service:
+  uuaa: ZYWX
+  # Nombre comercial del servicio
+  publicName: API en java spring
+  # Nombre corto de servicio
+  name: usinglibs
+  # Descripción del servicio
+  description: >
+    Api with libraries
+  version: "2.1.3"
+  # Tipo de servicio
+  type: API
+  # Language
+  language: Java - Spring boot
+  # Versión del language
+  languageVersion: "1.8.121"
+  # Versión mínima de NOVA
+  novaVersion: "19.04"
+
+# swagger api definitions
+apis:
+  # list of APIs that this service expose
+  served:
+    # swagger definition file
+    - definition: src/main/resources/api1.yml
+
+      # APIs that are used in this implementation
+      consumed:
+        - src/main/resources/api-client1.yml
+        - src/main/resources/api-client2.yml
+
+    - definition: src/main/resources/api2.yml
+      consumed:
+        - src/main/resources/api-client3.yml
+        - src/main/resources/api-client4.yml
+
+
+  # APIs that are used not directly by any API endpoint
+  # consumed:
+  #   - src/main/resources/apic1.yml
+
+# service properties at config-server
+properties:
+  # property name/identifier must be unique
+  - name: "service.log"
+    description: "Nivel de log"
+    # type: STRING, JSON, XML
+    type: "STRING"
+    # default value
+    default: "silly"
+      # who is the property owner
+      # SERVICE: any team member can modify this property
+      # ENVIRONMENT: Only environment owner can modify this property
+      # - INT, PRE, PRO: Project support - Product = dev
+      # - INT, PRE: Project support - Product = Maintenance
+    # - PRO: Service support - Product = Maintenance
+    management: "SERVICE"
+    # encrypt property so it's only visible by the owner
+    encrypt: false
+
+# Optional
+# dependencies, build order
+# list of project names you depend on
+# those must be in the same subsystem
+dependencies:
+  - service-name-001
+  - service-name-002
+
+# Optional
+# Extra build steps you application need
+# Example: binary dependencies
+build:
+  - kerberos: true
+
+# Optional
+# list of machines your application must be deployed
+machines:
+  - INT: ["nova_machine_601"]
+  - PRE: ["nova_machine_602"]
+  - PRO: ["nova_machine_603"]
+
+# Optional
+# list of nova libraries used by the service
+libraries:
+  - uuaa-release-service0-version0
+  - uuaa-release-service1-version0
+  - uuaa-release-service2-version0

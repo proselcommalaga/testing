@@ -1,0 +1,14 @@
+
+# data source configuration
+spring:
+  datasource:
+    initialize: true
+    testOnBorrow: true
+    validationQuery: SELECT 1
+    data: classpath:/data-TEST.sql
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+      ddl-auto: create
+      show-sql: true

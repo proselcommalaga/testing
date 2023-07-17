@@ -1,0 +1,22 @@
+{
+  "typedParameters": [
+    {
+      "name": "Garbage Collection",
+      "description": "Garbage collection related parameters.",
+      "exclude": true,
+      "parameters": []
+    },
+    {
+      "name": "Logs GC",
+      "description": "Garbage collection logging related parameters.",
+      "exclude": true,
+      "parameters": []
+    },
+    {
+      "name": "Strings performance",
+      "description": "Multiple performance enhancements by String optimization.",
+      "exclude": false,
+      "parameters": []
+    }
+  ]
+}

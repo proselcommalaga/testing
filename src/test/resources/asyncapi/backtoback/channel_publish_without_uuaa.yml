@@ -1,0 +1,115 @@
+asyncapi: '2.0.0'
+info:
+  title: test1Channel1
+  version: '1.0.0'
+  description: |
+    The First channel of the first Test with mode direct = publish
+
+defaultContentType: application/json
+
+channels:
+  mychannel1:
+    description: The channel 1
+    publish:
+      summary: Summary of the messages.
+      operationId: myChannel1Operation
+      message:
+        $ref: '#/components/messages/message1'
+      x-scs-group: myNovaGroup1
+
+components:
+  messages:
+    message1:
+      name: nameMessage1
+      title: titleMessage1
+      summary: Inform about message 1.
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/message1PayloadDto"
+  schemas:
+    message1PayloadDto:
+      type: object
+      properties:
+        measure:
+          type: integer
+          minimum: 0
+          description: Measure of anything.
+        sentAt:
+          $ref: "#/components/schemas/sentAtDto"
+        data:
+          $ref: "#/components/schemas/dataTypeDto"
+    sentAtDto:
+      type: string
+      format: date-time
+      description: Date and time when the message was sent.
+    dataTypeDto:
+      type: object
+      properties:
+        data1:
+          $ref: "#/components/schemas/innerDataType1Dto"
+        data2:
+          $ref: "#/components/schemas/innerDataType2Dto"
+        data3:
+          $ref: "#/components/schemas/innerDataType3Dto"
+    innerDataType1Dto:
+      type: object
+      properties:
+        enum1:
+          type: string
+          enum: [
+              "clueless",
+              "lazy",
+              "adventurous",
+              "aggressive"
+          ]
+        enum2:
+          type: string
+          enum:
+            - clueless2
+            - lazy2
+            - adventurous2
+            - aggressive2
+    innerDataType2Dto:
+      type: string
+    innerDataType3Dto:
+      type: object
+      properties:
+        complex:
+          $ref: "#/components/schemas/innerComplexDataType1Dto"
+        simple:
+          type: string
+        myArray:
+          type: array
+          items:
+            $ref: "#/components/schemas/array1Dto"
+        myEnumsArray:
+          type: array
+          items:
+            $ref: "#/components/schemas/innerDataType1Dto"
+    innerComplexDataType1Dto:
+      type: object
+      properties:
+        measure:
+          type: integer
+          minimum: 0
+          format: int64
+          description: Measure of anything.
+        sentAt:
+          $ref: "#/components/schemas/sentAtDto"
+    array1Dto:
+      type: object
+      properties:
+        myFloat:
+          type: number
+          format: float
+        myDouble:
+          type: number
+          format: double
+        myBoolean:
+          type: boolean
+        myString:
+          type: string
+        myEnumsArray:
+          type: array
+          items:
+            $ref: "#/components/schemas/innerDataType1Dto"
